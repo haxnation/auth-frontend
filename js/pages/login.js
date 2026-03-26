@@ -51,7 +51,14 @@ export function attachLoginEvents() {
         
         if (res.success) {
             if (res.data.oidc_flow) {
-                navigate(`/consent?client_name=${encodeURIComponent(res.data.client_name || 'Application')}`);
+                // --- NEW CHECK: Did they already consent? ---
+                if (res.data.has_consented) {
+                    // Bypass the consent screen and go straight to the backend to generate the token
+                    window.location.href = 'https://api.haxnation.org/auth/oidc/continue';
+                } else {
+                    // Show the consent screen as usual
+                    navigate(`/consent?client_name=${encodeURIComponent(res.data.client_name || 'Application')}`);
+                }
             } else {
                 navigate('/dashboard');
             }
