@@ -6,131 +6,142 @@ export function renderDashboard(user) {
     const isStudent = user.userType === 'student';
 
     return `
-    <div class="min-h-screen bg-white pb-20">
-        <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
-            <div class="max-w-5xl mx-auto px-4 h-16 flex justify-between items-center">
+    <div class="min-h-screen bg-[#fafafa] pb-20 selection:bg-[#5ce1e6] selection:text-black">
+        
+        <nav class="sticky top-0 z-40 bg-[#0b0b0b] text-[#fafafa] border-b-4 border-black">
+            <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
                 
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center text-sm font-bold">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-[#5ce1e6] text-black flex items-center justify-center font-bold border-2 border-[#5ce1e6] shadow-[2px_2px_0_0_#fafafa]">
                         HN
                     </div>
-                    <span class="font-bold text-lg tracking-tight hidden sm:block">HaxNation</span>
+                    <span class="font-bold text-xl uppercase tracking-widest hidden sm:block">SYS_CORE<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-1">
-                    ${renderNavLink('edit', 'Edit Profile', true)}
-                    ${renderNavLink('settings', 'Settings')}
+                <div class="hidden md:flex items-center space-x-4">
+                    ${renderNavLink('edit', 'DATA_EDIT', true)}
+                    ${renderNavLink('settings', 'SYS_CONFIG')}
                     
-                    <div class="h-4 w-px bg-gray-200 mx-4"></div>
+                    <div class="h-6 w-1 bg-white mx-2 opacity-30"></div>
                     
-                    <button id="btn-share-nav" class="bg-gray-100 hover:bg-gray-200 text-black px-4 py-2 rounded-lg text-sm font-medium transition-colors mr-2">
-                        <i class="fas fa-qrcode mr-2"></i> Share
+                    <button id="btn-share-nav" class="font-mono uppercase text-[10px] font-bold bg-[#fafafa] text-black border-2 border-black px-4 py-2 hover:bg-[#5ce1e6] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-0">
+                        <i class="fas fa-qrcode mr-2"></i> EXPORT_ID
                     </button>
 
-                    <button id="btn-logout-desktop" class="text-sm font-medium text-gray-500 hover:text-red-600 transition-colors px-3">
-                        Log out
+                    <button id="btn-logout-desktop" class="font-mono uppercase text-[10px] font-bold bg-[#ff2a2a] text-white border-2 border-transparent px-4 py-2 hover:border-white transition-all duration-0">
+                        TERMINATE_SESSION
                     </button>
                 </div>
 
                 <div class="flex items-center space-x-3 md:hidden">
-                    <button id="btn-share-mobile" class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-black">
-                        <i class="fas fa-qrcode text-sm"></i>
+                    <button id="btn-share-mobile" class="w-10 h-10 bg-[#fafafa] flex items-center justify-center text-black border-2 border-black hover:bg-[#5ce1e6]">
+                        <i class="fas fa-qrcode"></i>
                     </button>
-                    <button id="btn-mobile-menu" class="p-2 text-gray-600 hover:text-black">
-                        <i class="fas fa-bars text-xl"></i>
+                    <button id="btn-mobile-menu" class="w-10 h-10 border-2 border-[#fafafa] flex items-center justify-center text-[#fafafa] hover:bg-[#5ce1e6] hover:text-black transition-colors duration-0">
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
 
-            <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white absolute w-full left-0 shadow-lg z-50">
-                <div class="p-4 space-y-2">
-                    ${renderMobileLink('edit', 'Edit Profile', true)}
-                    ${renderMobileLink('settings', 'Settings')}
-                    <div class="h-px bg-gray-100 my-2"></div>
-                    <button id="btn-logout-mobile" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-colors">
-                        Log out
+            <div id="mobile-menu" class="hidden md:hidden border-t-4 border-white bg-black w-full absolute left-0 z-50">
+                <div class="p-0 flex flex-col font-mono uppercase text-sm font-bold">
+                    ${renderMobileLink('edit', 'DATA_EDIT', true)}
+                    ${renderMobileLink('settings', 'SYS_CONFIG')}
+                    <button id="btn-logout-mobile" class="w-full text-left px-6 py-4 bg-[#ff2a2a] text-white border-b-2 border-black hover:bg-black hover:text-[#ff2a2a] transition-colors duration-0">
+                        TERMINATE_SESSION
                     </button>
                 </div>
             </div>
         </nav>
 
-        <div class="max-w-3xl mx-auto px-4 py-8 md:py-12">
+        <div class="max-w-4xl mx-auto px-4 py-12">
             
             <div id="tab-edit" class="tab-content">
-                <div class="text-center mb-10">
-                    <div class="relative inline-block">
-                        <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto flex items-center justify-center text-3xl font-semibold border-4 border-white shadow-sm">
-                            ${user.name.charAt(0).toUpperCase()}
-                        </div>
+                
+                <div class="flex flex-col md:flex-row gap-8 mb-12 border-4 border-black bg-white p-8 shadow-[12px_12px_0_0_#000] relative">
+                    <div class="absolute -top-4 -left-4 border-2 border-black bg-black text-white px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#5ce1e6]">
+                        USER_NODE_ACTIVE
                     </div>
-                    <h1 class="text-2xl font-bold mt-4">${user.name}</h1>
-                    <p class="text-gray-500">${user.email}</p>
+                    
+                    <div class="w-32 h-32 bg-black text-[#5ce1e6] flex-shrink-0 flex items-center justify-center text-5xl font-bold border-4 border-black shadow-[4px_4px_0_0_#5ce1e6] rounded-none">
+                        ${user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-black">${user.name}</h1>
+                        <p class="font-mono text-sm uppercase tracking-widest bg-black text-white self-start px-2 py-1 mt-4">ADDR: ${user.email}</p>
+                    </div>
                 </div>
 
-                <form id="update-form" class="space-y-8">
+                <form id="update-form" class="space-y-12">
                     
-                    <section class="space-y-4">
-                        <h3 class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-2">Basic Info</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            ${renderField('Full name', 'name', user.name)}
-                            ${renderField('Phone', 'phoneNumber', user.phoneNumber, user.profileVisibility?.phoneNumber, '+1 234 567 890')}
+                    <section class="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] relative">
+                        <div class="bg-black text-[#5ce1e6] p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-black">
+                            [01] CORE_IDENTIFIERS
+                        </div>
+                        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            ${renderField('LEGAL_NAME', 'name', user.name)}
+                            ${renderField('COM_LINK_TEL', 'phoneNumber', user.phoneNumber, user.profileVisibility?.phoneNumber, '+1 234 567 890')}
                         </div>
                     </section>
 
-                    <section class="space-y-4">
-                        <h3 class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-2">Professional Info</h3>
-                        
-                        <div class="group">
-                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">I am a</label>
-                            <select name="userType" id="input-userType" class="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-black/5 transition-all font-medium text-gray-900">
-                                <option value="student" ${isStudent ? 'selected' : ''}>Student</option>
-                                <option value="professional" ${!isStudent ? 'selected' : ''}>Professional</option>
-                            </select>
+                    <section class="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] relative">
+                        <div class="bg-black text-[#5ce1e6] p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-black">
+                            [02] OPERATION_CLASS
                         </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            ${renderField('Location', 'currentLocation', user.currentLocation, user.profileVisibility?.currentLocation, 'City, Country')}
+                        <div class="p-8 space-y-8">
                             
-                            <div id="section-student" style="display: contents" class="${isStudent ? '' : 'hidden'}">
-                                ${renderField('University', 'collegeName', user.collegeName, user.profileVisibility?.collegeName)}
+                            <div class="group border-2 border-black p-4 bg-[#fafafa]">
+                                <label class="block font-mono text-xs font-bold uppercase mb-2 text-black">> CLASSIFICATION_TYPE</label>
+                                <select name="userType" id="input-userType" class="w-full border-2 border-black bg-white p-3 font-mono text-sm rounded-none focus:outline-none focus:ring-0 focus:border-[#5ce1e6] focus:bg-black focus:text-[#5ce1e6] transition-colors duration-0 appearance-none">
+                                    <option value="student" ${isStudent ? 'selected' : ''}>[NODE: STUDENT]</option>
+                                    <option value="professional" ${!isStudent ? 'selected' : ''}>[NODE: PROFESSIONAL]</option>
+                                </select>
                             </div>
 
-                            <div id="section-professional" style="display: contents" class="${!isStudent ? '' : 'hidden'}">
-                                ${renderField('Company', 'workCompany', user.workCompany, user.profileVisibility?.workCompany)}
-                                ${renderField('Role', 'workDesignation', user.workDesignation, user.profileVisibility?.workDesignation)}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                ${renderField('GEO_LOCATION', 'currentLocation', user.currentLocation, user.profileVisibility?.currentLocation, 'CITY, COUNTRY')}
+                                
+                                <div id="section-student" style="display: contents" class="${isStudent ? '' : 'hidden'}">
+                                    ${renderField('ACADEMIC_INSTITUTION', 'collegeName', user.collegeName, user.profileVisibility?.collegeName)}
+                                </div>
+
+                                <div id="section-professional" style="display: contents" class="${!isStudent ? '' : 'hidden'}">
+                                    ${renderField('CORP_AFFILIATION', 'workCompany', user.workCompany, user.profileVisibility?.workCompany)}
+                                    ${renderField('RANK_DESIGNATION', 'workDesignation', user.workDesignation, user.profileVisibility?.workDesignation)}
+                                </div>
                             </div>
                         </div>
                     </section>
 
-                    <section class="space-y-4">
-                        <h3 class="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-2">Social Links</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            ${renderField('LinkedIn', 'linkedinId', user.linkedinId, user.profileVisibility?.linkedinId, 'username')}
-                            ${renderField('GitHub', 'githubId', user.githubId, user.profileVisibility?.githubId, 'username')}
-                            ${renderField('Instagram', 'instagramId', user.instagramId, user.profileVisibility?.instagramId, '@username')}
-                            ${renderField('Website', 'website', user.website, user.profileVisibility?.website, 'https://example.com')}
+                    <section class="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] relative">
+                        <div class="bg-black text-[#5ce1e6] p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-black">
+                            [03] EXTERNAL_NODES
+                        </div>
+                        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            ${renderField('LINKEDIN_URI', 'linkedinId', user.linkedinId, user.profileVisibility?.linkedinId, 'username')}
+                            ${renderField('GITHUB_URI', 'githubId', user.githubId, user.profileVisibility?.githubId, 'username')}
+                            ${renderField('INSTAGRAM_URI', 'instagramId', user.instagramId, user.profileVisibility?.instagramId, '@username')}
+                            ${renderField('DOMAIN_URI', 'website', user.website, user.profileVisibility?.website, 'https://example.com')}
                         </div>
                     </section>
 
-                    <div class="pt-4">
+                    <div class="pt-4 flex justify-end">
                         <button type="submit" 
-                            class="w-full md:w-auto md:float-right bg-black text-white px-8 py-3 rounded-xl font-medium shadow-lg shadow-gray-200 hover:bg-gray-800 transition-all transform active:scale-95">
-                            Save Changes
+                            class="w-full md:w-auto font-mono uppercase tracking-widest font-bold bg-[#5ce1e6] text-black border-4 border-black px-8 py-4 shadow-[8px_8px_0_0_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0_0_#000] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none transition-all duration-75 text-lg">
+                            COMMIT_CHANGES
                         </button>
                     </div>
                 </form>
             </div>
 
             <div id="tab-settings" class="tab-content hidden pt-4">
-                <div class="max-w-lg mx-auto space-y-6">
-                    <div class="bg-red-50 rounded-2xl p-6 border border-red-100">
-                        <h3 class="text-red-900 font-bold mb-2">Danger Zone</h3>
-                        <p class="text-red-700/80 text-sm mb-6">Once you delete your account, there is no going back. Please be certain.</p>
-                        <button id="btn-delete-acc" 
-                            class="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-semibold shadow-sm border border-red-100 hover:bg-red-50 transition-colors">
-                            Delete Account
-                        </button>
-                    </div>
+                <div class="max-w-xl mx-auto border-4 border-[#ff2a2a] bg-black p-8 shadow-[12px_12px_0_0_#ff2a2a]">
+                    <h3 class="text-2xl font-bold text-[#ff2a2a] uppercase tracking-tight mb-4 border-b-2 border-[#ff2a2a] pb-2">CRITICAL_WARNING<span class="inline-block w-3 h-[1em] bg-[#ff2a2a] animate-pulse align-middle ml-1"></span></h3>
+                    <p class="font-mono text-sm text-white mb-8 border-l-4 border-[#ff2a2a] pl-4">Execution of the following command will permanently purge your entity from the mainframe. This action cannot be reverted.</p>
+                    <button id="btn-delete-acc" 
+                        class="w-full font-mono uppercase tracking-widest font-bold bg-[#ff2a2a] text-white border-2 border-[#ff2a2a] px-6 py-4 hover:bg-black hover:text-[#ff2a2a] transition-colors duration-0 shadow-[4px_4px_0_0_#ff2a2a] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none">
+                        EXECUTE_PURGE
+                    </button>
                 </div>
             </div>
 
@@ -141,10 +152,13 @@ export function renderDashboard(user) {
 
 // Helpers
 function renderNavLink(id, label, isActive = false) {
-    const activeClass = isActive ? 'bg-gray-100 text-black font-semibold' : 'text-gray-500 hover:text-black hover:bg-gray-50';
+    const activeClass = isActive 
+        ? 'bg-[#5ce1e6] text-black border-[#5ce1e6]' 
+        : 'text-[#fafafa] hover:bg-[#fafafa] hover:text-black border-transparent';
+    
     return `
         <button onclick="window.handleTabSwitch(event, '${id}')" 
-            class="nav-item nav-desktop-${id} px-4 py-2 rounded-lg text-sm transition-colors ${activeClass}"
+            class="nav-item nav-desktop-${id} font-mono uppercase text-xs font-bold px-4 py-2 border-2 transition-colors duration-0 ${activeClass}"
             data-tab="${id}">
             ${label}
         </button>
@@ -152,10 +166,12 @@ function renderNavLink(id, label, isActive = false) {
 }
 
 function renderMobileLink(id, label, isActive = false) {
-    const activeClass = isActive ? 'bg-gray-50 text-black font-semibold' : 'text-gray-500 hover:bg-gray-50 hover:text-black';
+    const activeClass = isActive 
+        ? 'bg-[#5ce1e6] text-black' 
+        : 'text-[#fafafa] hover:bg-[#fafafa] hover:text-black';
     return `
         <button onclick="window.handleTabSwitch(event, '${id}')" 
-            class="nav-item nav-mobile-${id} w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors ${activeClass}"
+            class="nav-item nav-mobile-${id} w-full text-left px-6 py-4 border-b-2 border-black transition-colors duration-0 ${activeClass}"
             data-tab="${id}">
             ${label}
         </button>
@@ -165,55 +181,56 @@ function renderMobileLink(id, label, isActive = false) {
 function renderField(label, name, value = '', isVisible = false, placeholder = '') {
     const showToggle = name !== 'name';
     return `
-        <div class="group">
-            <div class="flex items-center justify-between mb-1.5">
-                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide">${label}</label>
+        <div class="group border-2 border-black p-4 bg-[#fafafa]">
+            <div class="flex items-start justify-between mb-2">
+                <label class="block font-mono text-xs font-bold uppercase text-black">> ${label}</label>
                 ${showToggle ? `
-                <label class="flex items-center text-xs text-gray-400 hover:text-black cursor-pointer transition-colors select-none">
+                <label class="flex items-center gap-2 font-mono text-[10px] text-black cursor-pointer uppercase border-2 border-black px-2 py-1 hover:bg-[#5ce1e6] transition-colors duration-0 select-none">
                     <input type="checkbox" name="vis_${name}" ${isVisible ? 'checked' : ''} 
-                        class="mr-1.5 rounded border-gray-300 text-black focus:ring-black">
-                    Public
+                        class="appearance-none w-3 h-3 border-2 border-black bg-white checked:bg-black focus:outline-none focus:ring-0">
+                    PUBLIC_EXPOSURE
                 </label>
                 ` : ''}
             </div>
             <input type="text" name="${name}" value="${value || ''}" placeholder="${placeholder}"
-                class="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl focus:bg-white focus:ring-2 focus:ring-black/5 transition-all font-medium text-gray-900 placeholder-gray-400">
+                class="w-full border-2 border-black bg-white p-3 font-mono text-sm rounded-none focus:outline-none focus:ring-0 focus:border-[#5ce1e6] focus:bg-black focus:text-[#5ce1e6] transition-colors duration-0 placeholder-gray-400">
         </div>
     `;
 }
 
-// Global Handlers
 window.handleTabSwitch = (event, tabName) => {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
     document.getElementById(`tab-${tabName}`).classList.remove('hidden');
 
-    // Update Nav Styles
-    document.querySelectorAll('.nav-item').forEach(el => {
-        el.classList.remove('bg-gray-100', 'bg-gray-50', 'text-black', 'font-semibold');
-        el.classList.add('text-gray-500');
+    document.querySelectorAll('.nav-desktop-edit, .nav-desktop-settings').forEach(el => {
+        el.classList.remove('bg-[#5ce1e6]', 'text-black', 'border-[#5ce1e6]');
+        el.classList.add('text-[#fafafa]', 'border-transparent');
     });
 
     const deskBtn = document.querySelector(`.nav-desktop-${tabName}`);
     if(deskBtn) {
-        deskBtn.classList.remove('text-gray-500');
-        deskBtn.classList.add('bg-gray-100', 'text-black', 'font-semibold');
+        deskBtn.classList.remove('text-[#fafafa]', 'border-transparent');
+        deskBtn.classList.add('bg-[#5ce1e6]', 'text-black', 'border-[#5ce1e6]');
     }
+
+    document.querySelectorAll('.nav-mobile-edit, .nav-mobile-settings').forEach(el => {
+        el.classList.remove('bg-[#5ce1e6]', 'text-black');
+        el.classList.add('text-[#fafafa]');
+    });
 
     const mobileBtn = document.querySelector(`.nav-mobile-${tabName}`);
     if(mobileBtn) {
-        mobileBtn.classList.remove('text-gray-500');
-        mobileBtn.classList.add('bg-gray-50', 'text-black', 'font-semibold');
+        mobileBtn.classList.remove('text-[#fafafa]');
+        mobileBtn.classList.add('bg-[#5ce1e6]', 'text-black');
     }
 
     document.getElementById('mobile-menu').classList.add('hidden');
 };
 
 export function attachDashboardEvents(user) {
-    // Mobile Menu
     const menuBtn = document.getElementById('btn-mobile-menu');
     if(menuBtn) menuBtn.addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
 
-    // QR Code Modal Trigger (Desktop & Mobile)
     const showShare = () => Modal.showQR(user);
     const btnShareNav = document.getElementById('btn-share-nav');
     if(btnShareNav) btnShareNav.addEventListener('click', showShare);
@@ -221,7 +238,6 @@ export function attachDashboardEvents(user) {
     const btnShareMobile = document.getElementById('btn-share-mobile');
     if(btnShareMobile) btnShareMobile.addEventListener('click', showShare);
 
-    // Dynamic Form Toggle
     const typeSelect = document.getElementById('input-userType');
     const studentSec = document.getElementById('section-student');
     const profSec = document.getElementById('section-professional');
@@ -238,14 +254,13 @@ export function attachDashboardEvents(user) {
         });
     }
 
-    // Form Submit
     const form = document.getElementById('update-form');
     if(form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
-            btn.innerText = 'Saving...';
+            btn.innerText = 'COMMITTING...';
             btn.disabled = true;
 
             const formData = new FormData(e.target);
@@ -259,15 +274,12 @@ export function attachDashboardEvents(user) {
                 }
             }
             
-            // Clean up payload based on selected type
             if (payload.userType === 'student') {
-                // If student, ensure no professional data is sent (validation requirement)
                 payload.workCompany = "";
                 payload.workDesignation = "";
                 delete payload.workCompany;
                 delete payload.workDesignation;
             } else if (payload.userType === 'professional') {
-                // If professional, ensure no student data is sent
                 payload.collegeName = "";
                 delete payload.collegeName;
             }
@@ -275,20 +287,18 @@ export function attachDashboardEvents(user) {
             if(payload.name) await apiCall('/users/profile/basic', 'PUT', { name: payload.name });
             const res = await apiCall('/users/profile/extended', 'PUT', payload);
 
-            btn.innerText = originalText; // Reset text
+            btn.innerText = originalText;
             btn.disabled = false;
 
             if (res.success) {
-                Modal.alert('Success', 'Profile updated successfully!', 'success');
-                // Reload to reflect deep changes if type switched
+                Modal.alert('SUCCESS', 'Data structure updated successfully.', 'success');
                 setTimeout(() => window.location.reload(), 1000); 
             } else {
-                Modal.alert('Error', res.error, 'error');
+                Modal.alert('ERROR', res.error, 'error');
             }
         });
     }
 
-    // Logout
     const handleLogout = async () => {
         await apiCall('/logout', 'POST');
         navigate('/login');
@@ -298,15 +308,14 @@ export function attachDashboardEvents(user) {
         if(btn) btn.addEventListener('click', handleLogout);
     });
 
-    // Delete Account
     const deleteBtn = document.getElementById('btn-delete-acc');
     if(deleteBtn) {
         deleteBtn.addEventListener('click', async () => {
-            const confirmed = await Modal.confirm('Delete Account?', 'This action cannot be undone. All your data will be permanently removed.', 'Delete', true);
+            const confirmed = await Modal.confirm('INITIATE_PURGE?', 'This action cannot be undone. Root data blocks will be wiped.', 'EXECUTE', true);
             if(confirmed) {
                 const res = await apiCall('/users/account', 'DELETE');
                 if(res.success) navigate('/login');
-                else Modal.alert('Error', res.error, 'error');
+                else Modal.alert('FATAL_ERROR', res.error, 'error');
             }
         });
     }
