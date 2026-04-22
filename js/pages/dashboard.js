@@ -300,7 +300,7 @@ export function attachDashboardEvents(user) {
     }
 
     const handleLogout = async () => {
-        await apiCall('/logout', 'POST');
+        await apiCall('/logout', 'POST', {});
         navigate('/login');
     };
     ['btn-logout-desktop', 'btn-logout-mobile'].forEach(id => {
