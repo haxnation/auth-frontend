@@ -5,7 +5,7 @@ import { Modal } from '../components/modal.js';
 export function renderLogin() {
     return `
     <div class="min-h-[80vh] flex items-center justify-center p-4">
-        <div class="w-full max-w-lg md:max-w-xl bg-white border-4 border-[#0b0b0b] shadow-[12px_12px_0_0_#0b0b0b] p-8 md:p-12 rounded-none relative">
+        <div class="w-full max-w-2xl md:max-w-3xl bg-white border-4 border-[#0b0b0b] shadow-[12px_12px_0_0_#0b0b0b] p-8 md:p-12 rounded-none relative">
             
             <div class="absolute -top-4 -left-4 border-2 border-black bg-black text-white px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#5ce1e6] flex items-center gap-2">
                 <div class="w-2 h-2 bg-[#5ce1e6] animate-pulse rounded-none"></div>
@@ -35,13 +35,22 @@ export function renderLogin() {
                 <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 font-mono text-[10px] uppercase font-bold text-black border-2 border-black shadow-[2px_2px_0_0_#000]">EXTERNAL_OAUTH</span>
             </div>
             
-            <a href="https://api.haxnation.org/auth/google" class="flex items-center justify-center w-full font-mono uppercase tracking-widest font-bold bg-white text-black border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75">
-                <i class="fab fa-google border-2 border-black p-1 bg-[#fafafa] mr-3"></i> GOOGLE_AUTH
+            <a href="https://api.haxnation.org/auth/google" class="flex items-center justify-center w-full bg-white text-[#3c4043] border border-[#dadce0] rounded px-4 py-3 hover:bg-[#f8fafc] active:bg-[#e8eaed] transition-colors duration-0 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.25px;">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-5 h-5 mr-3">
+                    <g>
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"></path>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                        <path fill="none" d="M0 0h48v48H0z"></path>
+                    </g>
+                </svg>
+                Sign in with Google
             </a>
             
-            <div class="mt-8 pt-6 border-t-2 border-black flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <a href="/forgot-password" class="nav-link font-mono text-xs uppercase hover:bg-black hover:text-[#5ce1e6] inline-block p-1 border border-transparent transition-colors duration-0">>> RECOVER_ACCESS</a>
-                <p class="font-mono text-xs uppercase text-gray-500">NO_RECORD_FOUND? <a href="/register" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">CREATE_RECORD</a></p>
+            <div class="pt-6 border-t-2 border-black flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <a href="/forgot-password" class="nav-link font-mono text-xs uppercase hover:bg-black hover:text-[#5ce1e6] inline-block p-1 border border-transparent transition-colors duration-0">>> FORGOT PASSWORD</a>
+                <p class="font-mono text-xs uppercase text-gray-500">NO_RECORD_FOUND? <a href="/register" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">REGISTER</a></p>
             </div>
         </div>
     </div>
