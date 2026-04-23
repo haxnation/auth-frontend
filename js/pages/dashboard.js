@@ -12,30 +12,28 @@ export function renderDashboard(user) {
             <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
                 
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-[#5ce1e6] text-black flex items-center justify-center font-bold border-2 border-[#5ce1e6] shadow-[2px_2px_0_0_#fafafa]">
-                        HN
-                    </div>
-                    <span class="font-bold text-xl uppercase tracking-widest hidden sm:block">SYS_CORE<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
+                    <img src="https://haxnation.org/images/logo.png" alt="HaxNation Logo" class="h-8 object-contain">
+                    <span class="font-bold text-xl uppercase tracking-widest hidden sm:block">Dashboard<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4">
-                    ${renderNavLink('edit', 'DATA_EDIT', true)}
-                    ${renderNavLink('settings', 'SYS_CONFIG')}
+                    ${renderNavLink('edit', 'Edit Profile', true)}
+                    ${renderNavLink('settings', 'Settings')}
                     
                     <div class="h-6 w-1 bg-white mx-2 opacity-30"></div>
                     
                     <button id="btn-share-nav" class="font-mono uppercase text-[10px] font-bold bg-[#fafafa] text-black border-2 border-black px-4 py-2 hover:bg-[#5ce1e6] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-0">
-                        <i class="fas fa-qrcode mr-2"></i> EXPORT_ID
+                        <i class="fas fa-share-alt mr-2"></i> Share Profile
                     </button>
 
                     <button id="btn-logout-desktop" class="font-mono uppercase text-[10px] font-bold bg-[#ff2a2a] text-white border-2 border-transparent px-4 py-2 hover:border-white transition-all duration-0">
-                        TERMINATE_SESSION
+                        Log Out
                     </button>
                 </div>
 
                 <div class="flex items-center space-x-3 md:hidden">
                     <button id="btn-share-mobile" class="w-10 h-10 bg-[#fafafa] flex items-center justify-center text-black border-2 border-black hover:bg-[#5ce1e6]">
-                        <i class="fas fa-qrcode"></i>
+                        <i class="fas fa-share-alt"></i>
                     </button>
                     <button id="btn-mobile-menu" class="w-10 h-10 border-2 border-[#fafafa] flex items-center justify-center text-[#fafafa] hover:bg-[#5ce1e6] hover:text-black transition-colors duration-0">
                         <i class="fas fa-bars"></i>
@@ -45,10 +43,10 @@ export function renderDashboard(user) {
 
             <div id="mobile-menu" class="hidden md:hidden border-t-4 border-white bg-black w-full absolute left-0 z-50">
                 <div class="p-0 flex flex-col font-mono uppercase text-sm font-bold">
-                    ${renderMobileLink('edit', 'DATA_EDIT', true)}
-                    ${renderMobileLink('settings', 'SYS_CONFIG')}
+                    ${renderMobileLink('edit', 'Edit Profile', true)}
+                    ${renderMobileLink('settings', 'Settings')}
                     <button id="btn-logout-mobile" class="w-full text-left px-6 py-4 bg-[#ff2a2a] text-white border-b-2 border-black hover:bg-black hover:text-[#ff2a2a] transition-colors duration-0">
-                        TERMINATE_SESSION
+                        Log Out
                     </button>
                 </div>
             </div>
@@ -58,9 +56,9 @@ export function renderDashboard(user) {
             
             <div id="tab-edit" class="tab-content">
                 
-                <div class="flex flex-col md:flex-row gap-8 mb-12 border-4 border-black bg-white p-8 shadow-[12px_12px_0_0_#000] relative">
+                <div class="flex flex-col md:flex-row gap-8 mb-12 border-4 border-black bg-white p-6 md:p-8 shadow-[4px_4px_0_0_#000] md:shadow-[12px_12px_0_0_#000] relative">
                     <div class="absolute -top-4 -left-4 border-2 border-black bg-black text-white px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#5ce1e6]">
-                        USER_NODE_ACTIVE
+                        ACTIVE PROFILE
                     </div>
                     
                     <div class="w-32 h-32 bg-black text-[#5ce1e6] flex-shrink-0 flex items-center justify-center text-5xl font-bold border-4 border-black shadow-[4px_4px_0_0_#5ce1e6] rounded-none">
@@ -68,79 +66,79 @@ export function renderDashboard(user) {
                     </div>
                     <div class="flex flex-col justify-center">
                         <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-black">${user.name}</h1>
-                        <p class="font-mono text-sm uppercase tracking-widest bg-black text-white self-start px-2 py-1 mt-4">ADDR: ${user.email}</p>
+                        <p class="font-mono text-sm uppercase tracking-widest bg-black text-white self-start px-2 py-1 mt-4">Email: ${user.email}</p>
                     </div>
                 </div>
 
                 <form id="update-form" class="space-y-12">
                     
-                    <section class="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] relative">
+                    <section class="border-4 border-black bg-white shadow-[4px_4px_0_0_#000] md:shadow-[8px_8px_0_0_#000] relative">
                         <div class="bg-black text-[#5ce1e6] p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-black">
-                            [01] CORE_IDENTIFIERS
+                            01. Basic Information
                         </div>
-                        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                            ${renderField('LEGAL_NAME', 'name', user.name)}
-                            ${renderField('COM_LINK_TEL', 'phoneNumber', user.phoneNumber, user.profileVisibility?.phoneNumber, '+1 234 567 890')}
+                        <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                            ${renderField('Full Name', 'name', user.name)}
+                            ${renderField('Phone Number', 'phoneNumber', user.phoneNumber, user.profileVisibility?.phoneNumber, '+1 234 567 890')}
                         </div>
                     </section>
 
-                    <section class="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] relative">
+                    <section class="border-4 border-black bg-white shadow-[4px_4px_0_0_#000] md:shadow-[8px_8px_0_0_#000] relative">
                         <div class="bg-black text-[#5ce1e6] p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-black">
-                            [02] OPERATION_CLASS
+                            02. Professional Details
                         </div>
-                        <div class="p-8 space-y-8">
+                        <div class="p-6 md:p-8 space-y-6 md:space-y-8">
                             
                             <div class="group border-2 border-black p-4 bg-[#fafafa]">
-                                <label class="block font-mono text-xs font-bold uppercase mb-2 text-black">> CLASSIFICATION_TYPE</label>
+                                <label class="block font-mono text-xs font-bold uppercase mb-2 text-black">Account Type</label>
                                 <select name="userType" id="input-userType" class="w-full border-2 border-black bg-white p-3 font-mono text-sm rounded-none focus:outline-none focus:ring-0 focus:border-[#5ce1e6] focus:bg-black focus:text-[#5ce1e6] transition-colors duration-0 appearance-none">
-                                    <option value="student" ${isStudent ? 'selected' : ''}>[NODE: STUDENT]</option>
-                                    <option value="professional" ${!isStudent ? 'selected' : ''}>[NODE: PROFESSIONAL]</option>
+                                    <option value="student" ${isStudent ? 'selected' : ''}>Student</option>
+                                    <option value="professional" ${!isStudent ? 'selected' : ''}>Professional</option>
                                 </select>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                ${renderField('GEO_LOCATION', 'currentLocation', user.currentLocation, user.profileVisibility?.currentLocation, 'CITY, COUNTRY')}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                ${renderField('Location', 'currentLocation', user.currentLocation, user.profileVisibility?.currentLocation, 'City, Country')}
                                 
                                 <div id="section-student" style="display: contents" class="${isStudent ? '' : 'hidden'}">
-                                    ${renderField('ACADEMIC_INSTITUTION', 'collegeName', user.collegeName, user.profileVisibility?.collegeName)}
+                                    ${renderField('University', 'collegeName', user.collegeName, user.profileVisibility?.collegeName)}
                                 </div>
 
                                 <div id="section-professional" style="display: contents" class="${!isStudent ? '' : 'hidden'}">
-                                    ${renderField('CORP_AFFILIATION', 'workCompany', user.workCompany, user.profileVisibility?.workCompany)}
-                                    ${renderField('RANK_DESIGNATION', 'workDesignation', user.workDesignation, user.profileVisibility?.workDesignation)}
+                                    ${renderField('Company', 'workCompany', user.workCompany, user.profileVisibility?.workCompany)}
+                                    ${renderField('Job Title', 'workDesignation', user.workDesignation, user.profileVisibility?.workDesignation)}
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <section class="border-4 border-black bg-white shadow-[8px_8px_0_0_#000] relative">
+                    <section class="border-4 border-black bg-white shadow-[4px_4px_0_0_#000] md:shadow-[8px_8px_0_0_#000] relative">
                         <div class="bg-black text-[#5ce1e6] p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-black">
-                            [03] EXTERNAL_NODES
+                            03. Social Profiles
                         </div>
-                        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                            ${renderField('LINKEDIN_URI', 'linkedinId', user.linkedinId, user.profileVisibility?.linkedinId, 'username')}
-                            ${renderField('GITHUB_URI', 'githubId', user.githubId, user.profileVisibility?.githubId, 'username')}
-                            ${renderField('INSTAGRAM_URI', 'instagramId', user.instagramId, user.profileVisibility?.instagramId, '@username')}
-                            ${renderField('DOMAIN_URI', 'website', user.website, user.profileVisibility?.website, 'https://example.com')}
+                        <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                            ${renderField('LinkedIn Profile', 'linkedinId', user.linkedinId, user.profileVisibility?.linkedinId, 'username')}
+                            ${renderField('GitHub Username', 'githubId', user.githubId, user.profileVisibility?.githubId, 'username')}
+                            ${renderField('Instagram', 'instagramId', user.instagramId, user.profileVisibility?.instagramId, '@username')}
+                            ${renderField('Personal Website', 'website', user.website, user.profileVisibility?.website, 'https://example.com')}
                         </div>
                     </section>
 
                     <div class="pt-4 flex justify-end">
                         <button type="submit" 
                             class="w-full md:w-auto font-mono uppercase tracking-widest font-bold bg-[#5ce1e6] text-black border-4 border-black px-8 py-4 shadow-[8px_8px_0_0_#000] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0_0_#000] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none transition-all duration-75 text-lg">
-                            COMMIT_CHANGES
+                            Save Changes
                         </button>
                     </div>
                 </form>
             </div>
 
             <div id="tab-settings" class="tab-content hidden pt-4">
-                <div class="max-w-xl mx-auto border-4 border-[#ff2a2a] bg-black p-8 shadow-[12px_12px_0_0_#ff2a2a]">
-                    <h3 class="text-2xl font-bold text-[#ff2a2a] uppercase tracking-tight mb-4 border-b-2 border-[#ff2a2a] pb-2">CRITICAL_WARNING<span class="inline-block w-3 h-[1em] bg-[#ff2a2a] animate-pulse align-middle ml-1"></span></h3>
-                    <p class="font-mono text-sm text-white mb-8 border-l-4 border-[#ff2a2a] pl-4">Execution of the following command will permanently purge your entity from the mainframe. This action cannot be reverted.</p>
+                <div class="max-w-xl mx-auto border-4 border-[#ff2a2a] bg-black p-6 md:p-8 shadow-[4px_4px_0_0_#ff2a2a] md:shadow-[12px_12px_0_0_#ff2a2a]">
+                    <h3 class="text-2xl font-bold text-[#ff2a2a] uppercase tracking-tight mb-4 border-b-2 border-[#ff2a2a] pb-2">Danger Zone<span class="inline-block w-3 h-[1em] bg-[#ff2a2a] animate-pulse align-middle ml-1"></span></h3>
+                    <p class="font-mono text-sm text-white mb-8 border-l-4 border-[#ff2a2a] pl-4">Permanently delete your account and all associated data. This action cannot be undone.</p>
                     <button id="btn-delete-acc" 
                         class="w-full font-mono uppercase tracking-widest font-bold bg-[#ff2a2a] text-white border-2 border-[#ff2a2a] px-6 py-4 hover:bg-black hover:text-[#ff2a2a] transition-colors duration-0 shadow-[4px_4px_0_0_#ff2a2a] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none">
-                        EXECUTE_PURGE
+                        Delete Account
                     </button>
                 </div>
             </div>
@@ -183,12 +181,12 @@ function renderField(label, name, value = '', isVisible = false, placeholder = '
     return `
         <div class="group border-2 border-black p-4 bg-[#fafafa]">
             <div class="flex items-start justify-between mb-2">
-                <label class="block font-mono text-xs font-bold uppercase text-black">> ${label}</label>
+                <label class="block font-mono text-xs font-bold uppercase text-black">${label}</label>
                 ${showToggle ? `
                 <label class="flex items-center gap-2 font-mono text-[10px] text-black cursor-pointer uppercase border-2 border-black px-2 py-1 hover:bg-[#5ce1e6] transition-colors duration-0 select-none">
                     <input type="checkbox" name="vis_${name}" ${isVisible ? 'checked' : ''} 
                         class="appearance-none w-3 h-3 border-2 border-black bg-white checked:bg-black focus:outline-none focus:ring-0">
-                    PUBLIC_EXPOSURE
+                    Make Public
                 </label>
                 ` : ''}
             </div>
@@ -260,7 +258,7 @@ export function attachDashboardEvents(user) {
             e.preventDefault();
             const btn = e.target.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
-            btn.innerText = 'COMMITTING...';
+            btn.innerText = 'Saving...';
             btn.disabled = true;
 
             const formData = new FormData(e.target);
@@ -291,10 +289,10 @@ export function attachDashboardEvents(user) {
             btn.disabled = false;
 
             if (res.success) {
-                Modal.alert('SUCCESS', 'Data structure updated successfully.', 'success');
+                Modal.alert('Success', 'Profile updated successfully.', 'success');
                 setTimeout(() => window.location.reload(), 1000); 
             } else {
-                Modal.alert('ERROR', res.error, 'error');
+                Modal.alert('Error', res.error, 'error');
             }
         });
     }
@@ -311,11 +309,11 @@ export function attachDashboardEvents(user) {
     const deleteBtn = document.getElementById('btn-delete-acc');
     if(deleteBtn) {
         deleteBtn.addEventListener('click', async () => {
-            const confirmed = await Modal.confirm('INITIATE_PURGE?', 'This action cannot be undone. Root data blocks will be wiped.', 'EXECUTE', true);
+            const confirmed = await Modal.confirm('Delete Account?', 'This will permanently delete your account and all associated data. This cannot be undone.', 'Delete', true);
             if(confirmed) {
                 const res = await apiCall('/users/account', 'DELETE');
                 if(res.success) navigate('/login');
-                else Modal.alert('FATAL_ERROR', res.error, 'error');
+                else Modal.alert('Error', res.error, 'error');
             }
         });
     }
