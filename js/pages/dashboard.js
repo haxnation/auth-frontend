@@ -11,9 +11,12 @@ export function renderDashboard(user) {
         <nav class="sticky top-0 z-40 bg-[#0b0b0b] text-[#fafafa] border-b-4 border-black">
             <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
                 
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center gap-3">
                     <img src="https://haxnation.org/images/logo_wt.png" alt="HaxNation Logo" class="h-8 object-contain">
-                    <span class="font-bold text-xl uppercase tracking-widest hidden lg:block">Dashboard<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
+                    <div class="hidden lg:flex items-center gap-3">
+                        <span class="text-white opacity-30 text-lg">|</span>
+                        <span class="font-bold text-xl uppercase tracking-wider">Dashboard<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
+                    </div>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4">
@@ -52,7 +55,7 @@ export function renderDashboard(user) {
             </div>
         </nav>
 
-        <div class="max-w-5xl lg:max-w-6xl mx-auto px-4 py-12">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 py-12">
             
             <div id="tab-edit" class="tab-content">
                 
