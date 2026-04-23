@@ -9,11 +9,11 @@ export function renderDashboard(user) {
     <div class="min-h-screen bg-[#fafafa] pb-20 selection:bg-[#5ce1e6] selection:text-black">
         
         <nav class="sticky top-0 z-40 bg-[#0b0b0b] text-[#fafafa] border-b-4 border-black">
-            <div class="max-w-6xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
+            <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
                 
                 <div class="flex items-center space-x-4">
-                    <img src="https://haxnation.org/images/logo.png" alt="HaxNation Logo" class="h-8 object-contain">
-                    <span class="font-bold text-xl uppercase tracking-widest hidden sm:block">Dashboard<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
+                    <img src="https://haxnation.org/images/logo_wt.png" alt="HaxNation Logo" class="h-8 object-contain">
+                    <span class="font-bold text-xl uppercase tracking-widest hidden lg:block">Dashboard<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></span>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4">
@@ -52,7 +52,7 @@ export function renderDashboard(user) {
             </div>
         </nav>
 
-        <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="max-w-5xl lg:max-w-6xl mx-auto px-4 py-12">
             
             <div id="tab-edit" class="tab-content">
                 
@@ -133,7 +133,7 @@ export function renderDashboard(user) {
             </div>
 
             <div id="tab-settings" class="tab-content hidden pt-4">
-                <div class="max-w-xl mx-auto border-4 border-[#ff2a2a] bg-black p-6 md:p-8 shadow-[4px_4px_0_0_#ff2a2a] md:shadow-[12px_12px_0_0_#ff2a2a]">
+                <div class="max-w-2xl mx-auto border-4 border-[#ff2a2a] bg-black p-6 md:p-8 shadow-[4px_4px_0_0_#ff2a2a] md:shadow-[12px_12px_0_0_#ff2a2a]">
                     <h3 class="text-2xl font-bold text-[#ff2a2a] uppercase tracking-tight mb-4 border-b-2 border-[#ff2a2a] pb-2">Danger Zone<span class="inline-block w-3 h-[1em] bg-[#ff2a2a] animate-pulse align-middle ml-1"></span></h3>
                     <p class="font-mono text-sm text-white mb-8 border-l-4 border-[#ff2a2a] pl-4">Permanently delete your account and all associated data. This action cannot be undone.</p>
                     <button id="btn-delete-acc" 
