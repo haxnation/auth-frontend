@@ -33,7 +33,7 @@ export function renderLogin() {
             </form>
             
             <div class="my-8 border-t-2 border-black relative">
-                <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 font-mono text-[10px] uppercase font-bold text-black border-2 border-black shadow-[2px_2px_0_0_#000]">Or continue with</span>
+                <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 whitespace-nowrap font-mono text-[10px] uppercase font-bold text-black border-2 border-black shadow-[2px_2px_0_0_#000]">Or continue with</span>
             </div>
             
             <a href="https://api.haxnation.org/auth/google" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
