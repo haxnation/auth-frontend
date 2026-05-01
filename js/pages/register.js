@@ -3,6 +3,14 @@ import { navigate } from '../app.js';
 import { Modal } from '../components/modal.js';
 
 export function renderRegister() {
+    // 1. Grab the returnTo parameter if it exists
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = params.get('returnTo');
+    
+    // 2. Build the links to carry the parameter
+    const loginLink = returnTo ? `/login?returnTo=${encodeURIComponent(returnTo)}` : '/login';
+    const googleLink = returnTo ? `https://api.haxnation.org/auth/google?returnTo=${encodeURIComponent(returnTo)}` : 'https://api.haxnation.org/auth/google';
+
     return `
     <div class="min-h-[80vh] flex items-center justify-center p-4">
         <div class="w-full max-w-3xl lg:max-w-4xl bg-white border-4 border-[#0b0b0b] shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[12px_12px_0_0_#0b0b0b] p-6 md:p-12 rounded-none relative">
@@ -41,7 +49,7 @@ export function renderRegister() {
                 <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 font-mono text-[10px] uppercase font-bold text-black border-2 border-black shadow-[2px_2px_0_0_#000]">Or continue with</span>
             </div>
             
-            <a href="https://api.haxnation.org/auth/google" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
+            <a href="${googleLink}" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 mr-3">
                     <g>
                         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"></path>
@@ -56,7 +64,7 @@ export function renderRegister() {
             
             <div class="pt-6 border-t-2 border-black flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <p class="font-mono text-xs uppercase text-gray-500">
-                    Already have an account? <a href="/login" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">LOG IN</a>
+                    Already have an account? <a href="${loginLink}" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">LOG IN</a>
                 </p>
             </div>
         </div>
@@ -70,12 +78,17 @@ export function attachRegisterEvents() {
         const name = e.target.name.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
-
+        
         const res = await apiCall('/register', 'POST', { name, email, password });
         
         if (res.success) {
             await Modal.alert('Success', 'Account created. Please check your email to verify your account.');
-            navigate('/login');
+            
+            // 3. Keep passing the baton! When they finish registering, send them back to login WITH the returnTo parameter
+            const params = new URLSearchParams(window.location.search);
+            const returnTo = params.get('returnTo');
+            navigate(returnTo ? `/login?returnTo=${encodeURIComponent(returnTo)}` : '/login');
+            
         } else {
             Modal.alert('Registration Failed', res.error, 'error');
         }
