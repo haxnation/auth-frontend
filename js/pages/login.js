@@ -3,6 +3,15 @@ import { navigate } from '../app.js';
 import { Modal } from '../components/modal.js';
 
 export function renderLogin() {
+    // 1. Grab the returnTo parameter if it exists
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = params.get('returnTo');
+    
+    // 2. Dynamically build the links to carry the parameter forward
+    const registerLink = returnTo ? `/register?returnTo=${encodeURIComponent(returnTo)}` : '/register';
+    const forgotLink = returnTo ? `/forgot-password?returnTo=${encodeURIComponent(returnTo)}` : '/forgot-password';
+    const googleLink = returnTo ? `https://api.haxnation.org/auth/google?returnTo=${encodeURIComponent(returnTo)}` : 'https://api.haxnation.org/auth/google';
+
     return `
     <div class="min-h-[80vh] flex items-center justify-center p-4">
         <div class="w-full max-w-3xl lg:max-w-4xl bg-white border-4 border-[#0b0b0b] shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[12px_12px_0_0_#0b0b0b] p-6 md:p-12 rounded-none relative">
@@ -36,7 +45,7 @@ export function renderLogin() {
                 <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 whitespace-nowrap font-mono text-[10px] uppercase font-bold text-black border-2 border-black shadow-[2px_2px_0_0_#000]">Or continue with</span>
             </div>
             
-            <a href="https://api.haxnation.org/auth/google" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
+            <a href="${googleLink}" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 mr-3">
                     <g>
                         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"></path>
@@ -50,8 +59,8 @@ export function renderLogin() {
             </a>
             
             <div class="pt-6 border-t-2 border-black flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <a href="/forgot-password" class="nav-link font-mono text-xs uppercase hover:bg-black hover:text-[#5ce1e6] inline-block p-1 border border-transparent transition-colors duration-0">Forgot Password?</a>
-                <p class="font-mono text-xs uppercase text-gray-500">Don't have an account? <a href="/register" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">REGISTER</a></p>
+                <a href="${forgotLink}" class="nav-link font-mono text-xs uppercase hover:bg-black hover:text-[#5ce1e6] inline-block p-1 border border-transparent transition-colors duration-0">Forgot Password?</a>
+                <p class="font-mono text-xs uppercase text-gray-500">Don't have an account? <a href="${registerLink}" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">REGISTER</a></p>
             </div>
         </div>
     </div>
@@ -63,7 +72,15 @@ export function attachLoginEvents() {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        const res = await apiCall('/login', 'POST', { email, password });
+        
+        // 3. Grab the returnTo parameter to send to the backend API
+        const params = new URLSearchParams(window.location.search);
+        const returnTo = params.get('returnTo');
+        
+        const payload = { email, password };
+        if (returnTo) payload.returnTo = returnTo;
+
+        const res = await apiCall('/login', 'POST', payload);
         
         if (res.success) {
             if (res.data.oidc_flow) {
@@ -73,7 +90,8 @@ export function attachLoginEvents() {
                     navigate(`/consent?client_name=${encodeURIComponent(res.data.client_name || 'Application')}`);
                 }
             } else {
-                navigate('/dashboard');
+                // 4. Navigate using the backend's provided return path!
+                navigate(res.data.redirect_to || '/dashboard');
             }
         } else {
             Modal.alert('Login Failed', res.error || 'Invalid credentials.', 'error');
