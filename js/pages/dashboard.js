@@ -15,7 +15,7 @@ export function renderDashboard(user) {
                     <img src="https://haxnation.org/images/logo_wt.png" alt="HaxNation Logo" class="h-8 object-contain">
                     <div class="hidden lg:flex items-center gap-3">
                         <span class="text-white opacity-30 text-lg">|</span>
-                        <span class="font-bold text-xl uppercase tracking-wider">Dashboard</span>
+                        <span class="font-bold text-xl mr-3 uppercase tracking-wider">Dashboard</span>
                     </div>
                 </div>
 
