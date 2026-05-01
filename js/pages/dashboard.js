@@ -1,4 +1,4 @@
-import { apiCall } from '../api.js';
+import { apiCall, getActiveServices, revokeAccess } from '../api.js';
 import { navigate } from '../app.js';
 import { Modal } from '../components/modal.js';
 
@@ -105,7 +105,6 @@ export function renderDashboard(user) {
                                 <div id="section-student" style="display: contents" class="${isStudent ? '' : 'hidden'}">
                                     ${renderField('University', 'collegeName', user.collegeName, user.profileVisibility?.collegeName)}
                                 </div>
-
                                 <div id="section-professional" style="display: contents" class="${!isStudent ? '' : 'hidden'}">
                                     ${renderField('Company', 'workCompany', user.workCompany, user.profileVisibility?.workCompany)}
                                     ${renderField('Job Title', 'workDesignation', user.workDesignation, user.profileVisibility?.workDesignation)}
@@ -136,9 +135,25 @@ export function renderDashboard(user) {
             </div>
 
             <div id="tab-settings" class="tab-content hidden pt-4">
+                
+                <!-- NEW: AUTHORIZED APPS SECTION -->
+                <div class="max-w-2xl mx-auto border-4 border-black bg-white p-6 md:p-8 shadow-[4px_4px_0_0_#000] md:shadow-[12px_12px_0_0_#000] mb-8 relative">
+                    <div class="absolute -top-4 -left-4 border-2 border-black bg-black text-[#5ce1e6] px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#5ce1e6]">
+                        CONNECTED APPS
+                    </div>
+                    <h3 class="text-2xl font-bold text-black uppercase tracking-tight mb-4 border-b-2 border-black pb-2">Authorized Apps<span class="inline-block w-3 h-[1em] bg-[#5ce1e6] animate-pulse align-middle ml-1"></span></h3>
+                    <p class="font-mono text-sm text-black mb-6">Manage third-party applications that have access to your account data.</p>
+                    
+                    <div id="authorized-apps-container" class="space-y-4">
+                        <!-- Apps will be dynamically injected here -->
+                    </div>
+                </div>
+
+                <!-- DANGER ZONE -->
                 <div class="max-w-2xl mx-auto border-4 border-[#ff2a2a] bg-black p-6 md:p-8 shadow-[4px_4px_0_0_#ff2a2a] md:shadow-[12px_12px_0_0_#ff2a2a]">
                     <h3 class="text-2xl font-bold text-[#ff2a2a] uppercase tracking-tight mb-4 border-b-2 border-[#ff2a2a] pb-2">Danger Zone<span class="inline-block w-3 h-[1em] bg-[#ff2a2a] animate-pulse align-middle ml-1"></span></h3>
                     <p class="font-mono text-sm text-white mb-8 border-l-4 border-[#ff2a2a] pl-4">Permanently delete your account and all associated data. This action cannot be undone.</p>
+                    
                     <button id="btn-delete-acc" 
                         class="w-full font-mono uppercase tracking-widest font-bold bg-[#ff2a2a] text-white border-2 border-[#ff2a2a] px-6 py-4 hover:bg-black hover:text-[#ff2a2a] transition-colors duration-0 shadow-[4px_4px_0_0_#ff2a2a] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none">
                         Delete Account
@@ -156,7 +171,7 @@ function renderNavLink(id, label, isActive = false) {
     const activeClass = isActive 
         ? 'bg-[#5ce1e6] text-black border-[#5ce1e6]' 
         : 'text-[#fafafa] hover:bg-[#fafafa] hover:text-black border-transparent';
-    
+        
     return `
         <button onclick="window.handleTabSwitch(event, '${id}')" 
             class="nav-item nav-desktop-${id} font-mono uppercase text-xs font-bold px-4 py-2 border-2 transition-colors duration-0 ${activeClass}"
@@ -170,6 +185,7 @@ function renderMobileLink(id, label, isActive = false) {
     const activeClass = isActive 
         ? 'bg-[#5ce1e6] text-black' 
         : 'text-[#fafafa] hover:bg-[#fafafa] hover:text-black';
+
     return `
         <button onclick="window.handleTabSwitch(event, '${id}')" 
             class="nav-item nav-mobile-${id} w-full text-left px-6 py-4 border-b-2 border-black transition-colors duration-0 ${activeClass}"
@@ -207,7 +223,6 @@ window.handleTabSwitch = (event, tabName) => {
         el.classList.remove('bg-[#5ce1e6]', 'text-black', 'border-[#5ce1e6]');
         el.classList.add('text-[#fafafa]', 'border-transparent');
     });
-
     const deskBtn = document.querySelector(`.nav-desktop-${tabName}`);
     if(deskBtn) {
         deskBtn.classList.remove('text-[#fafafa]', 'border-transparent');
@@ -218,7 +233,6 @@ window.handleTabSwitch = (event, tabName) => {
         el.classList.remove('bg-[#5ce1e6]', 'text-black');
         el.classList.add('text-[#fafafa]');
     });
-
     const mobileBtn = document.querySelector(`.nav-mobile-${tabName}`);
     if(mobileBtn) {
         mobileBtn.classList.remove('text-[#fafafa]');
@@ -300,10 +314,73 @@ export function attachDashboardEvents(user) {
         });
     }
 
+    // NEW: Render Authorized Apps
+    const renderAuthorizedApps = async () => {
+        const container = document.getElementById('authorized-apps-container');
+        if (!container) return;
+
+        container.innerHTML = '<p class="font-mono text-sm bg-[#fafafa] border-2 border-black p-4 text-center animate-pulse">Fetching authorization data...</p>';
+
+        try {
+            const response = await getActiveServices();
+            if (!response.success) throw new Error(response.error);
+
+            const services = response.data.activeServices;
+
+            if (!services || services.length === 0) {
+                container.innerHTML = '<p class="font-mono text-sm bg-[#fafafa] border-2 border-black p-4">You have not authorized any third-party apps.</p>';
+                return;
+            }
+
+            container.innerHTML = services.map(service => `
+                <div class="app-item flex flex-col sm:flex-row justify-between items-start sm:items-center bg-[#fafafa] border-2 border-black p-4" id="app-${service.clientId}">
+                    <div class="mb-4 sm:mb-0">
+                        <strong class="block font-mono font-bold uppercase text-black text-lg">${service.name}</strong>
+                        <span class="font-mono text-xs text-gray-600 uppercase border-b-2 border-gray-400 pb-1">${service.url}</span>
+                    </div>
+                    <button class="revoke-btn w-full sm:w-auto font-mono uppercase text-xs font-bold bg-[#ff2a2a] text-white border-2 border-black px-4 py-2 hover:bg-black hover:text-[#ff2a2a] transition-colors duration-0 shadow-[2px_2px_0_0_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none" data-client="${service.clientId}">
+                        Revoke
+                    </button>
+                </div>
+            `).join('');
+
+            // Attach event listeners to the new revoke buttons
+            document.querySelectorAll('.revoke-btn').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const clientId = e.target.getAttribute('data-client');
+                    const confirmed = await Modal.confirm('Revoke Access?', 'Are you sure you want to revoke access? You will need to authorize again on that website.', 'Revoke', true);
+                    
+                    if (confirmed) {
+                        const res = await revokeAccess(clientId);
+                        if (res.success) {
+                            document.getElementById(`app-${clientId}`).remove();
+                            Modal.alert('Success', 'Access revoked successfully.', 'success');
+                            
+                            // Check if the container is now empty
+                            if (document.querySelectorAll('.app-item').length === 0) {
+                                container.innerHTML = '<p class="font-mono text-sm bg-[#fafafa] border-2 border-black p-4">You have not authorized any third-party apps.</p>';
+                            }
+                        } else {
+                            Modal.alert('Error', res.error || 'Failed to revoke access.', 'error');
+                        }
+                    }
+                });
+            });
+
+        } catch (error) {
+            container.innerHTML = '<p class="font-mono text-sm text-white bg-[#ff2a2a] border-2 border-black p-4">Error loading applications.</p>';
+            console.error(error);
+        }
+    };
+
+    // Call the function to load the apps when the dashboard mounts
+    renderAuthorizedApps();
+
     const handleLogout = async () => {
         await apiCall('/logout', 'POST', {action: 'terminate_session'});
         navigate('/login');
     };
+
     ['btn-logout-desktop', 'btn-logout-mobile'].forEach(id => {
         const btn = document.getElementById(id);
         if(btn) btn.addEventListener('click', handleLogout);
