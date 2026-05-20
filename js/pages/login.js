@@ -14,14 +14,14 @@ export function renderLogin() {
 
     return `
     <div class="min-h-[80vh] flex items-center justify-center p-4">
-        <div class="w-full max-w-3xl lg:max-w-4xl bg-white border-4 border-[#0b0b0b] shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[12px_12px_0_0_#0b0b0b] p-6 md:p-12 rounded-none relative">
+        <div class="w-full max-w-3xl lg:max-w-4xl card relative">
             
-            <div class="absolute -top-4 -left-4 border-2 border-black bg-black text-white px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#5ce1e6] flex items-center gap-2">
-                <div class="w-2 h-2 bg-[#5ce1e6] animate-pulse rounded-none"></div>
+            <div class="absolute -top-4 -left-4 border-2 border-ink bg-ink text-white px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#0b0b0b] flex items-center gap-2">
+                <div class="w-2 h-2 bg-cyan animate-pulse rounded-none"></div>
                 SECURE LOGIN
             </div>
 
-            <div class="text-left mb-8 mt-4 border-b-2 border-black pb-4">
+            <div class="text-left mb-8 mt-4 border-b-2 border-ink pb-4">
                 <img src="https://haxnation.org/images/logo.png" alt="HaxNation Logo" class="h-10 md:h-12 mb-6 object-contain">
                 <h1 class="text-2xl md:text-3xl font-bold uppercase tracking-tight">Welcome Back</h1>
                 <p class="font-mono text-xs uppercase tracking-widest text-gray-500 mt-2">Sign in to your account</p>
@@ -29,23 +29,28 @@ export function renderLogin() {
             
             <form id="login-form" class="space-y-6">
                 <div>
-                    <label class="font-mono text-xs font-bold uppercase mb-2 block text-black">Email Address</label>
-                    <input type="email" name="email" class="w-full border-2 border-black bg-[#fafafa] p-4 font-mono text-sm rounded-none focus:outline-none focus:ring-0 focus:border-[#5ce1e6] focus:bg-black focus:text-[#5ce1e6] transition-colors duration-0" required>
+                    <label class="label" for="login-email">Email Address</label>
+                    <input type="email" id="login-email" name="email" class="input w-full" required>
                 </div>
                 <div>
-                    <label class="font-mono text-xs font-bold uppercase mb-2 block text-black">Password</label>
-                    <input type="password" name="password" class="w-full border-2 border-black bg-[#fafafa] p-4 font-mono text-sm rounded-none focus:outline-none focus:ring-0 focus:border-[#5ce1e6] focus:bg-black focus:text-[#5ce1e6] transition-colors duration-0" required>
+                    <label class="label" for="login-password">Password</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" name="password" class="input w-full pr-10" required>
+                        <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink hover:text-cyan focus:outline-none" aria-label="Toggle password visibility" onclick="const p=document.getElementById('login-password'); p.type=p.type==='password'?'text':'password'; this.innerHTML=p.type==='password'?'<i class=\\'fas fa-eye\\'></i>':'<i class=\\'fas fa-eye-slash\\'></i>';">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="w-full font-mono uppercase tracking-widest font-bold bg-[#5ce1e6] text-black border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mt-4">
+                <button type="submit" class="btn-primary w-full mt-4">
                     Sign In
                 </button>
             </form>
             
-            <div class="my-8 border-t-2 border-black relative">
-                <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 whitespace-nowrap font-mono text-[10px] uppercase font-bold text-black border-2 border-black shadow-[2px_2px_0_0_#000]">Or continue with</span>
+            <div class="my-8 border-t-2 border-ink relative">
+                <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 whitespace-nowrap font-mono text-[10px] uppercase font-bold text-ink border-2 border-ink shadow-[2px_2px_0_0_#0b0b0b]">Or continue with</span>
             </div>
             
-            <a href="${googleLink}" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-black px-6 py-4 shadow-[4px_4px_0_0_#000] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
+            <a href="${googleLink}" class="flex items-center justify-center w-full bg-white text-[#3c4043] border-2 border-ink px-6 py-4 shadow-[4px_4px_0_0_#0b0b0b] hover:bg-[#f8fafc] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#0b0b0b] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-75 mb-8" style="font-family: 'Roboto', arial, sans-serif; font-weight: 500; font-size: 16px; letter-spacing: 0.25px;">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 mr-3">
                     <g>
                         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"></path>
@@ -58,9 +63,9 @@ export function renderLogin() {
                 Sign in with Google
             </a>
             
-            <div class="pt-6 border-t-2 border-black flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <a href="${forgotLink}" class="nav-link font-mono text-xs uppercase hover:bg-black hover:text-[#5ce1e6] inline-block p-1 border border-transparent transition-colors duration-0">Forgot Password?</a>
-                <p class="font-mono text-xs uppercase text-gray-500">Don't have an account? <a href="${registerLink}" class="nav-link font-bold text-black border-b-2 border-black hover:bg-[#5ce1e6] transition-colors duration-0 ml-1">REGISTER</a></p>
+            <div class="pt-6 border-t-2 border-ink flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <a href="${forgotLink}" class="nav-link font-mono text-xs uppercase hover:bg-ink hover:text-cyan inline-block p-1 border border-transparent transition-colors duration-0">Forgot Password?</a>
+                <p class="font-mono text-xs uppercase text-gray-500">Don't have an account? <a href="${registerLink}" class="nav-link font-bold text-ink border-b-2 border-ink hover:bg-cyan transition-colors duration-0 ml-1">REGISTER</a></p>
             </div>
         </div>
     </div>
@@ -77,10 +82,18 @@ export function attachLoginEvents() {
         const params = new URLSearchParams(window.location.search);
         const returnTo = params.get('returnTo');
         
+        const btn = e.target.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+        btn.innerText = 'AUTHENTICATING...';
+        btn.disabled = true;
+
         const payload = { email, password };
         if (returnTo) payload.returnTo = returnTo;
 
         const res = await apiCall('/login', 'POST', payload);
+        
+        btn.innerText = originalText;
+        btn.disabled = false;
         
         if (res.success) {
             if (res.data.oidc_flow) {
