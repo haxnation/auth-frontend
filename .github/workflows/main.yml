@@ -5,6 +5,9 @@ on:
     branches:
       - main  # Or your specific branch name
 
+permissions:
+  contents: write
+
 jobs:
   copy-file:
     runs-on: ubuntu-latest
