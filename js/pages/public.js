@@ -6,7 +6,7 @@ export async function renderPublicProfile(userId) {
     if (!res.success) {
         return `
             <div class="max-w-3xl lg:max-w-4xl mx-auto mt-20 bg-ink text-danger border-4 border-ink p-6 md:p-12 text-center shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[12px_12px_0_0_#0b0b0b] rounded-none">
-                <img src="https://haxnation.org/images/logo.png" alt="HaxNation Logo" class="h-12 md:h-16 mx-auto mb-6 object-contain opacity-50">
+                <img src="https://haxnation.org/images/logo.png" alt="Haxnation Logo" class="h-12 md:h-16 mx-auto mb-6 object-contain opacity-50">
                 <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Profile Not Found<span class="inline-block w-3 h-[1em] bg-danger animate-pulse align-middle ml-1"></span></h2>
                 <p class="font-mono text-sm">This user does not exist or their profile is private.</p>
             </div>

@@ -22,7 +22,7 @@ export function renderRegister() {
 
             <div class="text-left mb-8 mt-4 border-b-2 border-ink pb-4">
                 <div class="bg-ink border-2 border-ink p-2 mb-6 inline-block shadow-[4px_4px_0_0_#5ce1e6]">
-                    <img src="https://haxnation.org/images/logo_wt.png" alt="HaxNation Logo" class="h-8 md:h-10 object-contain">
+                    <img src="https://haxnation.org/images/logo_wt.png" alt="Haxnation Logo" class="h-8 md:h-10 object-contain">
                 </div>
                 <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-tight">Create Account</h2>
                 <p class="font-mono text-xs uppercase tracking-widest text-gray-500 mt-2">Sign up for a new account</p>

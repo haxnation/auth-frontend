@@ -4,6 +4,7 @@ import { Modal } from '../components/modal.js';
 
 export function renderDashboard(user) {
     const isStudent = user.userType === 'student';
+    const isFirstTime = !user.updatedAt;
 
     return `
     <div class="min-h-screen bg-canvas pb-20 selection:bg-cyan selection:text-ink">
@@ -12,7 +13,7 @@ export function renderDashboard(user) {
             <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
                 
                 <div class="flex items-center gap-3">
-                    <img src="https://haxnation.org/images/logo_wt.png" alt="HaxNation Logo" class="h-8 object-contain">
+                    <img src="https://haxnation.org/images/logo_wt.png" alt="Haxnation Logo" class="h-8 object-contain">
                     <div class="hidden lg:flex items-center gap-3">
                         <span class="text-white opacity-30 text-lg">|</span>
                         <span class="font-bold text-xl mr-3 uppercase tracking-wider">Dashboard</span>
@@ -75,7 +76,19 @@ export function renderDashboard(user) {
 
                 <form id="update-form" class="space-y-12">
                     
-                    <section class="border-4 border-ink bg-white shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[8px_8px_0_0_#0b0b0b] relative">
+                    ${isFirstTime ? `
+                    <div id="wizard-progress" class="mb-8 border-4 border-ink bg-white p-4 shadow-[4px_4px_0_0_#0b0b0b]">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-mono text-xs font-bold uppercase text-ink">Profile Setup Progress</span>
+                            <span id="wizard-percent" class="font-mono text-xs font-bold text-cyan bg-ink px-2 py-1">33%</span>
+                        </div>
+                        <div class="w-full bg-canvas border-2 border-ink h-6 p-1">
+                            <div id="wizard-bar" class="bg-cyan h-full transition-all duration-300" style="width: 33%"></div>
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <section id="step-1" class="border-4 border-ink bg-white shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[8px_8px_0_0_#0b0b0b] relative">
                         <div class="bg-ink text-cyan p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-ink">
                             01. Basic Information
                         </div>
@@ -85,7 +98,7 @@ export function renderDashboard(user) {
                         </div>
                     </section>
 
-                    <section class="border-4 border-ink bg-white shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[8px_8px_0_0_#0b0b0b] relative">
+                    <section id="step-2" class="${isFirstTime ? 'hidden ' : ''}border-4 border-ink bg-white shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[8px_8px_0_0_#0b0b0b] relative">
                         <div class="bg-ink text-cyan p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-ink">
                             02. Professional Details
                         </div>
@@ -113,7 +126,7 @@ export function renderDashboard(user) {
                         </div>
                     </section>
 
-                    <section class="border-4 border-ink bg-white shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[8px_8px_0_0_#0b0b0b] relative">
+                    <section id="step-3" class="${isFirstTime ? 'hidden ' : ''}border-4 border-ink bg-white shadow-[4px_4px_0_0_#0b0b0b] md:shadow-[8px_8px_0_0_#0b0b0b] relative">
                         <div class="bg-ink text-cyan p-4 font-mono font-bold uppercase tracking-widest border-b-4 border-ink">
                             03. Social Profiles
                         </div>
@@ -125,7 +138,18 @@ export function renderDashboard(user) {
                         </div>
                     </section>
 
-                    <div class="pt-4 flex justify-end">
+                    ${isFirstTime ? `
+                    <div id="wizard-nav" class="flex justify-between pt-4">
+                        <button type="button" id="btn-prev" class="hidden font-mono uppercase tracking-widest font-bold bg-canvas text-ink border-4 border-ink px-8 py-4 shadow-[4px_4px_0_0_#0b0b0b] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-0">
+                            Back
+                        </button>
+                        <button type="button" id="btn-next" class="ml-auto font-mono uppercase tracking-widest font-bold bg-cyan text-ink border-4 border-ink px-8 py-4 shadow-[8px_8px_0_0_#0b0b0b] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0_0_#0b0b0b] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none transition-all duration-75 text-lg">
+                            Next Step
+                        </button>
+                    </div>
+                    ` : ''}
+
+                    <div id="submit-nav" class="${isFirstTime ? 'hidden ' : ''}pt-4 flex justify-end">
                         <button type="submit" 
                             class="w-full md:w-auto font-mono uppercase tracking-widest font-bold bg-cyan text-ink border-4 border-ink px-8 py-4 shadow-[8px_8px_0_0_#0b0b0b] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0_0_#0b0b0b] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none transition-all duration-75 text-lg">
                             Save Changes
@@ -243,6 +267,86 @@ window.handleTabSwitch = (event, tabName) => {
 };
 
 export function attachDashboardEvents(user) {
+    const isFirstTime = !user.updatedAt;
+    
+    if (isFirstTime) {
+        let currentStep = 1;
+        const totalSteps = 3;
+        
+        const updateWizard = () => {
+            const percent = Math.round((currentStep / totalSteps) * 100);
+            const percentEl = document.getElementById('wizard-percent');
+            const barEl = document.getElementById('wizard-bar');
+            if (percentEl) percentEl.innerText = percent + '%';
+            if (barEl) barEl.style.width = percent + '%';
+            
+            for(let i = 1; i <= totalSteps; i++) {
+                const el = document.getElementById(`step-${i}`);
+                if (el) {
+                    if (i === currentStep) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            }
+            
+            const btnPrev = document.getElementById('btn-prev');
+            const wizardNav = document.getElementById('wizard-nav');
+            const submitNav = document.getElementById('submit-nav');
+            
+            if (btnPrev) {
+                if (currentStep === 1) {
+                    btnPrev.classList.add('hidden');
+                } else {
+                    btnPrev.classList.remove('hidden');
+                }
+            }
+            
+            if (currentStep === totalSteps) {
+                if (wizardNav) {
+                    wizardNav.classList.add('hidden');
+                    wizardNav.classList.remove('flex');
+                }
+                if (submitNav) {
+                    submitNav.classList.remove('hidden');
+                    submitNav.classList.add('flex');
+                }
+            } else {
+                if (wizardNav) {
+                    wizardNav.classList.remove('hidden');
+                    wizardNav.classList.add('flex');
+                }
+                if (submitNav) {
+                    submitNav.classList.add('hidden');
+                    submitNav.classList.remove('flex');
+                }
+            }
+        };
+        
+        const btnNext = document.getElementById('btn-next');
+        if (btnNext) {
+            btnNext.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateWizard();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+        
+        const btnPrev = document.getElementById('btn-prev');
+        if (btnPrev) {
+            btnPrev.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateWizard();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+    }
+
     const menuBtn = document.getElementById('btn-mobile-menu');
     if(menuBtn) menuBtn.addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
 

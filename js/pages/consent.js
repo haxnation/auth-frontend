@@ -28,7 +28,7 @@ export function renderConsent() {
                 <div class="absolute -top-4 -right-4 border-2 border-ink bg-ink text-white px-2 py-1 font-mono text-[10px] uppercase shadow-[2px_2px_0_0_#0b0b0b]">
                     AUTHORIZATION REQUEST
                 </div>
-                <img src="https://haxnation.org/images/logo.png" alt="HaxNation Logo" class="h-12 md:h-16 mx-auto mb-6 object-contain">
+                <img src="https://haxnation.org/images/logo.png" alt="Haxnation Logo" class="h-12 md:h-16 mx-auto mb-6 object-contain">
                 
                 <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Authorize Access<span class="inline-block w-3 h-[1em] bg-cyan animate-pulse align-middle ml-1"></span></h2>
                 
