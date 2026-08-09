@@ -285,9 +285,23 @@ export function attachDashboardEvents(user) {
                 if (key.startsWith('vis_')) {
                     payload.profileVisibility[key.replace('vis_', '')] = true;
                 } else {
-                    if(value) payload[key] = value;
+                    if(value) {
+                        if (['linkedinId', 'githubId', 'instagramId'].includes(key)) {
+                            let cleaned = value.split('?')[0].replace(/\/$/, '');
+                            if (cleaned.includes('/')) {
+                                cleaned = cleaned.split('/').pop();
+                            }
+                            if (cleaned.startsWith('@')) {
+                                cleaned = cleaned.substring(1);
+                            }
+                            payload[key] = cleaned;
+                        } else {
+                            payload[key] = value;
+                        }
+                    }
                 }
             }
+
             
             if (payload.userType === 'student') {
                 payload.workCompany = "";
