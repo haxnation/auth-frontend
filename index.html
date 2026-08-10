@@ -130,7 +130,7 @@
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <img src="/logo.png" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
                     <div>
-                        <h4 style="margin: 0; font-size: 14px; font-weight: bold; color: #0b0b0b;">Install Haxnation Auth</h4>
+                        <h4 style="margin: 0; font-size: 14px; font-weight: bold; color: #0b0b0b;">Install App</h4>
                         <p style="margin: 4px 0 0; font-size: 11px; color: #666;">Add to Home Screen</p>
                     </div>
                 </div>
@@ -142,7 +142,6 @@
         `;
         document.body.insertAdjacentHTML('beforeend', toastHtml);
         
-        // Trigger reflow and then apply slide-up animation
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 const toast = document.getElementById('pwa-install-toast');
@@ -165,7 +164,6 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response: ${outcome}`);
                 deferredPrompt = null;
             }
         });
