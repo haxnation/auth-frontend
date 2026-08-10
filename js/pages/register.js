@@ -4,7 +4,9 @@ import { Modal } from '../components/modal.js';
 
 export function renderRegister() {
     // 1. Grab the returnTo parameter if it exists
-    const params = new URLSearchParams(window.location.search);
+    const hashSplit = window.location.hash.split('?');
+    const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+    const params = new URLSearchParams(queryString);
     const returnTo = params.get('returnTo');
     
     // 2. Build the links to carry the parameter
@@ -100,7 +102,9 @@ export function attachRegisterEvents() {
             await Modal.alert('Success', 'Account created. Please check your email to verify your account.');
             
             // 3. Keep passing the baton! When they finish registering, send them back to login WITH the returnTo parameter
-            const params = new URLSearchParams(window.location.search);
+            const hashSplit = window.location.hash.split('?');
+            const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+            const params = new URLSearchParams(queryString);
             const returnTo = params.get('returnTo');
             navigate(returnTo ? `/login?returnTo=${encodeURIComponent(returnTo)}` : '/login');
             

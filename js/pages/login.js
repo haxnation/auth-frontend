@@ -4,7 +4,9 @@ import { Modal } from '../components/modal.js';
 
 export function renderLogin() {
     // 1. Grab the returnTo parameter if it exists
-    const params = new URLSearchParams(window.location.search);
+    const hashSplit = window.location.hash.split('?');
+    const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+    const params = new URLSearchParams(queryString);
     const returnTo = params.get('returnTo');
     
     // 2. Dynamically build the links to carry the parameter forward
@@ -81,7 +83,9 @@ export function attachLoginEvents() {
         const password = e.target.password.value;
         
         // 3. Grab the returnTo parameter to send to the backend API
-        const params = new URLSearchParams(window.location.search);
+        const hashSplit = window.location.hash.split('?');
+        const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+        const params = new URLSearchParams(queryString);
         const returnTo = params.get('returnTo');
         
         const btn = e.target.querySelector('button[type="submit"]');

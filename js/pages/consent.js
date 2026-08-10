@@ -16,7 +16,9 @@ function escapeHTML(str) {
 }
 
 export function renderConsent() {
-    const params = new URLSearchParams(window.location.search);
+    const hashSplit = window.location.hash.split('?');
+    const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+    const params = new URLSearchParams(queryString);
     // 2. Escape the client_name parameter before using it
     const rawClientName = params.get('client_name') || 'Application';
     const clientName = escapeHTML(rawClientName);

@@ -10,7 +10,15 @@ function showLoading() {
 }
 
 async function router() {
-    let path = window.location.hash.slice(1);
+    let hashPath = window.location.hash.slice(1);
+    
+    // Fallback: If no hash but there is a pathname, redirect to the hash version
+    if (!hashPath && window.location.pathname !== '/' && window.location.pathname !== '') {
+        window.location.replace('/#' + window.location.pathname + window.location.search);
+        return;
+    }
+    
+    let path = hashPath.split('?')[0];
     if (!path || path === '') {
         path = '/';
     }

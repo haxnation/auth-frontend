@@ -15,7 +15,9 @@ export function renderVerifyEmail() {
 }
 
 export async function handleVerification() {
-    const params = new URLSearchParams(window.location.search);
+    const hashSplit = window.location.hash.split('?');
+    const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+    const params = new URLSearchParams(queryString);
     const token = params.get('token');
     const statusEl = document.getElementById('verify-status');
 

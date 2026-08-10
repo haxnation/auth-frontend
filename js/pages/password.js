@@ -97,7 +97,9 @@ export function renderResetPassword() {
 export function attachResetEvents() {
     document.getElementById('reset-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const params = new URLSearchParams(window.location.search);
+        const hashSplit = window.location.hash.split('?');
+        const queryString = hashSplit.length > 1 ? '?' + hashSplit[1] : window.location.search;
+        const params = new URLSearchParams(queryString);
         const token = params.get('token');
         const password = e.target.password.value;
 
