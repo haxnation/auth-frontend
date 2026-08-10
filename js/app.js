@@ -10,7 +10,10 @@ function showLoading() {
 }
 
 async function router() {
-    const path = window.location.pathname;
+    let path = window.location.hash.slice(1);
+    if (!path || path === '') {
+        path = '/';
+    }
     
     try {
         if (path.startsWith('/u/')) {
@@ -80,7 +83,7 @@ async function router() {
 
         if (path === '/' || path === '/dashboard') {
             if (isAuthenticated) {
-                if (path === '/') window.history.replaceState({}, '', '/dashboard');
+                if (path === '/') window.location.hash = '/dashboard';
                 
                 showLoading();
                 const { renderDashboard, attachDashboardEvents } = await import('./pages/dashboard.js');
@@ -96,7 +99,7 @@ async function router() {
         app.innerHTML = `
             <div class="text-center mt-10 border-4 border-ink bg-white p-8 shadow-[8px_8px_0_0_#0b0b0b] max-w-md mx-auto">
                 <h2 class="text-2xl font-bold uppercase tracking-tight border-b-2 border-ink pb-2 mb-6">404 - SYSTEM NOT FOUND<span class="inline-block w-3 h-[1em] bg-danger animate-pulse align-middle ml-1"></span></h2>
-                <a href="/" class="block btn-primary">INITIALIZE_HOME</a>
+                <a href="#/" class="block btn-primary">INITIALIZE_HOME</a>
             </div>`;
 
     } catch (error) {
@@ -110,11 +113,11 @@ async function router() {
 }
 
 export function navigate(url) {
-    window.history.pushState({}, '', url);
-    router();
+    window.location.hash = url.startsWith('#') ? url : '#' + url;
 }
 
 window.addEventListener('popstate', router);
+window.addEventListener('hashchange', router);
 
 document.addEventListener('click', e => {
     const link = e.target.closest('a');
