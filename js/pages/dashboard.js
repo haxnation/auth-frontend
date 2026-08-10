@@ -9,47 +9,62 @@ export function renderDashboard(user) {
     return `
     <div class="min-h-screen bg-canvas pb-20 selection:bg-cyan selection:text-ink">
         
-        <nav class="sticky top-0 z-40 bg-ink text-canvas border-b-4 border-ink">
-            <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center font-mono">
-                
+        <nav class="sticky top-0 z-50 border-b-2 border-[#0b0b0b] bg-[#0b0b0b] text-[#fafafa]">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex justify-between items-center font-mono">
                 <div class="flex items-center gap-3">
-                    <img src="https://haxnation.org/images/logo_wt.png" alt="Haxnation Logo" class="h-8 object-contain">
-                    <div class="hidden lg:flex items-center gap-3">
+                    <img src="/logo.png" alt="Haxnation" class="h-7 sm:h-8 w-auto object-contain">
+                    <div class="hidden sm:flex items-center gap-3">
                         <span class="text-white opacity-30 text-lg">|</span>
-                        <span class="font-bold text-xl mr-3 uppercase tracking-wider">Dashboard</span>
+                        <span class="font-bold text-sm sm:text-base uppercase tracking-wider">Dashboard</span>
                     </div>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4">
-                    ${renderNavLink('edit', 'Edit Profile', true)}
-                    ${renderNavLink('settings', 'Settings')}
+                <div class="hidden md:flex items-center gap-2">
+                    <button onclick="window.handleTabSwitch(event, 'edit')" 
+                        class="nav-item nav-desktop-edit font-mono uppercase text-[10px] font-bold px-3 py-1.5 border-2 transition-colors duration-0 bg-[#5ce1e6] text-[#0b0b0b] border-[#5ce1e6]"
+                        data-tab="edit">
+                        Edit Profile
+                    </button>
+                    <button onclick="window.handleTabSwitch(event, 'settings')" 
+                        class="nav-item nav-desktop-settings font-mono uppercase text-[10px] font-bold px-3 py-1.5 border-2 transition-colors duration-0 text-[#fafafa] hover:bg-[#fafafa] hover:text-[#0b0b0b] border-transparent"
+                        data-tab="settings">
+                        Settings
+                    </button>
                     
-                    <div class="h-6 w-1 bg-white mx-2 opacity-30"></div>
+                    <div class="h-5 w-px bg-white mx-1 opacity-30"></div>
                     
-                    <button id="btn-share-nav" class="font-mono uppercase text-[10px] font-bold bg-canvas text-ink border-2 border-ink px-4 py-2 hover:bg-cyan hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-0">
-                        <i class="fas fa-share-alt mr-2"></i> Share Profile
+                    <button id="btn-share-nav" class="font-mono uppercase text-[10px] font-bold bg-[#fafafa] text-[#0b0b0b] border-2 border-[#0b0b0b] px-3 py-1.5 hover:bg-[#5ce1e6] transition-all duration-0">
+                        <i class="fas fa-share-alt mr-1"></i> Share
                     </button>
 
-                    <button id="btn-logout-desktop" class="font-mono uppercase text-[10px] font-bold bg-danger text-white border-2 border-transparent px-4 py-2 hover:border-white transition-all duration-0">
+                    <button id="btn-logout-desktop" class="font-mono uppercase text-[10px] font-bold bg-[#ff2a2a] text-white border-2 border-transparent px-3 py-1.5 hover:border-white transition-all duration-0">
                         Log Out
                     </button>
                 </div>
 
-                <div class="flex items-center space-x-3 md:hidden">
-                    <button id="btn-share-mobile" class="w-10 h-10 bg-canvas flex items-center justify-center text-ink border-2 border-ink hover:bg-cyan">
-                        <i class="fas fa-share-alt"></i>
+                <div class="flex items-center gap-2 md:hidden">
+                    <button id="btn-share-mobile" class="w-9 h-9 bg-[#fafafa] flex items-center justify-center text-[#0b0b0b] border-2 border-[#0b0b0b] hover:bg-[#5ce1e6]">
+                        <i class="fas fa-share-alt text-sm"></i>
                     </button>
-                    <button id="btn-mobile-menu" class="w-10 h-10 border-2 border-canvas flex items-center justify-center text-canvas hover:bg-cyan hover:text-ink transition-colors duration-0">
+                    <button id="btn-mobile-menu" class="w-9 h-9 border-2 border-[#fafafa] flex items-center justify-center text-[#fafafa] hover:bg-[#5ce1e6] hover:text-[#0b0b0b] transition-colors duration-0">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
 
-            <div id="mobile-menu" class="hidden md:hidden border-t-4 border-white bg-ink w-full absolute left-0 z-50">
+            <div id="mobile-menu" class="hidden md:hidden border-t-2 border-[#fafafa] bg-[#0b0b0b] w-full absolute left-0 z-50">
                 <div class="p-0 flex flex-col font-mono uppercase text-sm font-bold">
-                    ${renderMobileLink('edit', 'Edit Profile', true)}
-                    ${renderMobileLink('settings', 'Settings')}
-                    <button id="btn-logout-mobile" class="w-full text-left px-6 py-4 bg-danger text-white border-b-2 border-ink hover:bg-ink hover:text-danger transition-colors duration-0">
+                    <button onclick="window.handleTabSwitch(event, 'edit')" 
+                        class="nav-item nav-mobile-edit w-full text-left px-6 py-3 border-b-2 border-[#0b0b0b] transition-colors duration-0 bg-[#5ce1e6] text-[#0b0b0b]"
+                        data-tab="edit">
+                        Edit Profile
+                    </button>
+                    <button onclick="window.handleTabSwitch(event, 'settings')" 
+                        class="nav-item nav-mobile-settings w-full text-left px-6 py-3 border-b-2 border-[#0b0b0b] transition-colors duration-0 text-[#fafafa] hover:bg-[#fafafa] hover:text-[#0b0b0b]"
+                        data-tab="settings">
+                        Settings
+                    </button>
+                    <button id="btn-logout-mobile" class="w-full text-left px-6 py-3 bg-[#ff2a2a] text-white border-b-2 border-[#0b0b0b] hover:bg-[#0b0b0b] hover:text-[#ff2a2a] transition-colors duration-0">
                         Log Out
                     </button>
                 </div>
